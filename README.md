@@ -6,7 +6,7 @@ Don't confuse with [Electrum server](https://github.com/spesmilo/electrum-server
 
 ### Ports
 
-* ``7000`` - JSONRPC port.
+* ``7000`` - JSON-RPC port.
 
 ### Volumes
 
@@ -25,11 +25,14 @@ docker run --rm -p 7000:7000 --name electrum osminogin/electrum-daemon
 ## Usage
 
 ```bash
-curl --data-binary '{"id":"1","method":"help"}' http://localhost:7000
+docker exec -it electrum electrum daemon status
+docker exec -it electrum electrum create
+curl --data-binary '{"id":"1","method":"listaddresses"}' http://localhost:7000
 ```
 
 ## API
 
+* [Electrum protocol specs](http://docs.electrum.org/en/latest/protocol.html).
 * [API related sources](https://github.com/spesmilo/electrum/blob/master/lib/commands.py).
 
 ## License
