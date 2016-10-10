@@ -5,9 +5,9 @@ ENV ELECTRUM_VERSION 2.7.4
 ENV ELECTRUM_USER electrum-user
 ENV ELECTRUM_HOME /home/$ELECTRUM_USER
 
-RUN useradd -ms /usr/sbin/nologin $ELECTRUM_USER
+RUN useradd -m $ELECTRUM_USER
 
-RUN apt-get update -y && apt-get install -y socat
+RUN apt-get update -y && apt-get install -y python-qt4 socat
 
 RUN pip install \
 		https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz
