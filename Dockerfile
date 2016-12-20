@@ -7,7 +7,7 @@ ENV ELECTRUM_HOME /home/$ELECTRUM_USER
 
 RUN useradd -m $ELECTRUM_USER
 
-RUN apt-get update -y && apt-get install -y python-qt4 socat
+RUN apt-get update -y && apt-get install -y python-qt4 socat telnet
 
 RUN pip install \
 		https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz
