@@ -25,5 +25,5 @@ EXPOSE 7000
 
 RUN electrum setconfig rpcport 7777
 
-# TCP relay to localhost with socat
-CMD electrum daemon start && socat -v TCP-LISTEN:7000,fork TCP:127.0.0.1:7777
+ADD entrypoint.sh /
+ENTRYPOINT /entrypoint.sh
