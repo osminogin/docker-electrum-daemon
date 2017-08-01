@@ -25,5 +25,5 @@ EXPOSE 7000
 
 RUN electrum setconfig rpcport 7777
 
-ADD entrypoint.sh /
-ENTRYPOINT /entrypoint.sh
+ADD run.sh /
+ENTRYPOINT /run.sh
