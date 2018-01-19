@@ -10,31 +10,28 @@ Star this project on Docker Hub :star2: https://hub.docker.com/r/osminogin/elect
 
 ### Ports
 
-* ``7000`` - JSON-RPC port.
+* `7000` - JSON-RPC port.
 
 ### Volumes
 
-* ``/data`` - usually on host it has a path ``/home/user/.electrum``.
+* `/data` - usually on host it has a path ``/home/user/.electrum``.
 
 
 ## Running
 
+Take a look at `docker-compose.yml` to see how this is setup. When running in production, you can use this as a guide.
+
 ```bash
-docker run --rm -p 127.0.0.1:7000:7000 --name electrum osminogin/electrum-daemon
+docker-compose up
+docker-compose exec electrum electrum daemon status
+docker-compose exec electrum electrum create
+docker-compose exec electrum electrum daemon load_wallet
+curl --data-binary '{"id":"1","method":"listaddresses"}' http://electrum:electrumz@localhost:7000
 ```
 
 :exclamation:**Warning**:exclamation:
 
 Always link electrum daemon to containers or bind to localhost directly and not expose 7000 port for security reasons.
-
-
-## Usage
-
-```bash
-docker exec -it electrum electrum daemon status
-docker exec -it electrum electrum create
-curl --data-binary '{"id":"1","method":"listaddresses"}' http://localhost:7000
-```
 
 ## API
 
