@@ -17,10 +17,10 @@ RUN mkdir -p ${ELECTRUM_HOME}/.electrum/ /data/ && \
 
 USER $ELECTRUM_USER
 WORKDIR $ELECTRUM_HOME
-
 VOLUME /data
 
-EXPOSE 7000
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
 
-ADD run.sh /
-ENTRYPOINT /run.sh
+EXPOSE 7000
+CMD ["electrum"]
