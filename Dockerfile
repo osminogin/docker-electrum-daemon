@@ -1,13 +1,13 @@
-FROM python:2.7-slim
+FROM python:3.6-slim
 MAINTAINER Vladimir Osintsev <oc@co.ru>
 
-ENV ELECTRUM_VERSION 2.7.12
+RUN apt-get update -y && apt-get install -y python-qt4 socat telnet netcat curl
+
+ENV ELECTRUM_VERSION 3.0.5
 ENV ELECTRUM_USER electrum-user
 ENV ELECTRUM_HOME /home/$ELECTRUM_USER
 
 RUN useradd -m $ELECTRUM_USER
-
-RUN apt-get update -y && apt-get install -y python-qt4 socat telnet netcat curl
 
 RUN pip install \
 		https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz
@@ -22,8 +22,6 @@ WORKDIR $ELECTRUM_HOME
 VOLUME /data
 
 EXPOSE 7000
-
-RUN electrum setconfig rpcport 7777
 
 ADD run.sh /
 ENTRYPOINT /run.sh
