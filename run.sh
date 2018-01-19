@@ -2,11 +2,11 @@
 set -x
 
 # graceful shutdown
-trap 'echo 123123; pkill -TERM -P1; electrum daemon stop; exit 0' SIGTERM
+trap 'pkill -TERM -P1; electrum daemon stop; exit 0' SIGTERM
 
 # Set config
-electrum setconfig rpcuser ${ELECTRUM_RPCUSER}
-electrum setconfig rpcpassword ${ELECTRUM_RPCPASSWORD}
+electrum setconfig rpcuser ${ELECTRUM_USER}
+electrum setconfig rpcpassword ${ELECTRUM_PASSWORD}
 electrum setconfig rpcport 7777
 
 # run application

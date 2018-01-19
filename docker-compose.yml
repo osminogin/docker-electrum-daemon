@@ -3,8 +3,7 @@ services:
   electrum:
     build: .
     ports:
-      - "7000:7000"
-    command: run.sh
+      - 127.0.0.1:7000:7000
     environment:
-      ELECTRUM_RPCUSER: electrum
-      ELECTRUM_RPCPASSWORD: electrumz
+      ELECTRUM_USER: electrum
+      ELECTRUM_PASSWORD: electrumz
