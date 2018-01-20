@@ -26,12 +26,14 @@ Star this project on Docker Hub :star2: https://hub.docker.com/r/osminogin/elect
 Running from Docker:
 
 ```bash
-docker run --rm --name electrum \
+docker run --rm --name electrum-daemon \
     --publish 127.0.0.1:7000:7000 \
     --volume /srv/electrum:/data \
     osminogin/electrum-daemon
 ```
 ```bash
+docker exec -it electrum-daemon electrum create
+docker exec -it electrum-daemon electrum daemon load_wallet
 docker exec -it electrum-daemon electrum daemon status
 {
     "auto_connect": true,
