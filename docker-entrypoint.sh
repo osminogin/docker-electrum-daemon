@@ -15,6 +15,33 @@ electrum setconfig rpcport 7000
 # Run application
 electrum daemon start
 
+echo "checking status"
+electrum daemon status
+echo "Done"
+
+# Restore from keys if available
+if [ -n "$ELECTRUM_MASTER_PRIVATE_KEY" ];
+then
+  echo "Restoring and loading wallet from Master Private Key"
+  {
+    # && - do not stop script if command fails
+    echo | electrum restore $ELECTRUM_MASTER_PRIVATE_KEY
+  } || { # catch
+    echo "Wallet already exists; skipping..."
+  }
+  electrum daemon load_wallet
+elif [ -n "$ELECTRUM_MASTER_PUBLIC_KEY" ];
+then
+  echo "Restoring and loading wallet from Master Public Key"
+  {
+    # && - do not stop script if command fails
+    electrum restore $ELECTRUM_MASTER_PUBLIC_KEY
+  } || {
+    echo "Wallet already exists; skipping..."
+  }
+  electrum daemon load_wallet
+fi
+
 # Wait forever
 while true; do
   tail -f /dev/null & wait ${!}
