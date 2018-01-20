@@ -4,7 +4,9 @@
 
 **Electrum client running as a daemon in docker container with JSON-RPC enabled.**
 
-Don't confuse with [Electrum server](https://github.com/spesmilo/electrum-server) that use bitcoind and full blockchain data. [Electrum client](https://electrum.org/) is light bitcoin wallet software operates through supernodes (Electrum server instances actually).
+[Electrum client](https://electrum.org/) is light bitcoin wallet software operates through supernodes (Electrum server instances actually).
+
+Don't confuse with [Electrum server](https://github.com/spesmilo/electrum-server) that use bitcoind and full blockchain data.
 
 Star this project on Docker Hub :star2: https://hub.docker.com/r/osminogin/electrum-daemon/
 
@@ -17,7 +19,38 @@ Star this project on Docker Hub :star2: https://hub.docker.com/r/osminogin/elect
 * `/data` - usually on host it has a path ``/home/user/.electrum``.
 
 
-## Running
+## Getting started
+
+#### docker run
+
+Running from Docker:
+
+```bash
+docker run --rm --name electrum \
+    --publish 127.0.0.1:7000:7000 \
+    --volume /srv/electrum:/data \
+    osminogin/electrum-daemon
+```
+```bash
+docker exec -it electrum-daemon electrum daemon status
+{
+    "auto_connect": true,
+    "blockchain_height": 505136,
+    "connected": true,
+    "fee_per_kb": 427171,
+    "path": "/home/electrum/.electrum",
+    "server": "us01.hamster.science",
+    "server_height": 505136,
+    "spv_nodes": 10,
+    "version": "3.0.5",
+    "wallets": {
+        "/home/electrum/.electrum/wallets/default_wallet": true
+    }
+}
+```
+
+
+#### docker-compose
 
 Take a look at `docker-compose.yml` to see how this is setup. When running in production, you can use this as a guide.
 
