@@ -21,9 +21,9 @@ Star this project on Docker Hub :star2: https://hub.docker.com/r/osminogin/elect
 
 ## Getting started
 
-#### docker run
+#### docker
 
-Running from Docker:
+Running with Docker:
 
 ```bash
 docker run --rm --name electrum-daemon \

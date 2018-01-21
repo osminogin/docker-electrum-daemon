@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -ex
 
-# graceful shutdown
+# Graceful shutdown
 trap 'pkill -TERM -P1; electrum daemon stop; exit 0' SIGTERM
 
 # Set config
@@ -10,10 +10,12 @@ electrum setconfig rpcpassword ${ELECTRUM_PASSWORD}
 electrum setconfig rpchost 0.0.0.0
 electrum setconfig rpcport 7000
 
-# run application
+# XXX: Check load wallet or create
+
+# Run application
 electrum daemon start
 
-# wait forever
+# Wait forever
 while true; do
   tail -f /dev/null & wait ${!}
 done
