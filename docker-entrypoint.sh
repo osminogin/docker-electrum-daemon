@@ -10,9 +10,4 @@ electrum setconfig rpcpassword ${ELECTRUM_PASSWORD}
 electrum setconfig rpcport 7000
 
 # run application
-electrum daemon start
-
-# wait forever
-while true; do
-  tail -f /dev/null & wait ${!}
-done
+electrum daemon
