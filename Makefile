@@ -1,7 +1,7 @@
 ELECTRUM_VERSION = $(strip $(shell cat VERSION))
 
 DOCKER_IMAGE ?= osminogin/electrum-daemon
-DOCKER_TAG = ELECTRUM_VERSION
+DOCKER_TAG = $(ELECTRUM_VERSION)
 
 default: docker_build
 
