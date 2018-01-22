@@ -1,13 +1,29 @@
 ELECTRUM_VERSION = $(strip $(shell cat VERSION))
 
+GIT_COMMIT = $(strip $(shell git rev-parse --short HEAD))
+
 DOCKER_IMAGE ?= osminogin/electrum-daemon
 DOCKER_TAG = $(ELECTRUM_VERSION)
 
-default: docker_build
+# Build Docker image
+build: docker_build output
+
+# Build and push Docker image
+release: docker_build docker_push output
+
+default: docker_build output
 
 docker_build:
 	@docker build \
-		--build-arg VERSION=$(ELECTRUM_VERSION) \
-		--build-arg VCS_REF=`git rev-parse --short HEAD` \
 		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
-		-t $(DOCKER_IMAGE):$(DOCKER_TAG) .
+		--build-arg VERSION=$(ELECTRUM_VERSION) \
+		--build-arg VCS_REF=$(GIT_COMMIT) \
+		-t $(IMAGE_NAME) .
+
+docker_push:
+	docker tag $(IMAGE_NAME) $(DOCKER_IMAGE):latest
+	docker push $(IMAGE_NAME)
+	docker push $(DOCKER_IMAGE):latest
+
+output:
+	@echo Docker Image: $(DOCKER_IMAGE):$(DOCKER_TAG)
