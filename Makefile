@@ -18,11 +18,11 @@ docker_build:
 		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
 		--build-arg VERSION=$(ELECTRUM_VERSION) \
 		--build-arg VCS_REF=$(GIT_COMMIT) \
-		-t $(IMAGE_NAME) .
+		-t $(DOCKER_IMAGE):$(DOCKER_TAG) .
 
 docker_push:
-	docker tag $(IMAGE_NAME) $(DOCKER_IMAGE):latest
-	docker push $(IMAGE_NAME)
+	docker tag $(DOCKER_IMAGE):$(DOCKER_TAG) $(DOCKER_IMAGE):latest
+	docker push $(DOCKER_IMAGE):$(DOCKER_TAG)
 	docker push $(DOCKER_IMAGE):latest
 
 output:
