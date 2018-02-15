@@ -45,7 +45,7 @@ docker exec -it electrum-daemon electrum daemon status
     "server": "us01.hamster.science",
     "server_height": 505136,
     "spv_nodes": 10,
-    "version": "3.0.5",
+    "version": "3.0.6",
     "wallets": {
         "/home/electrum/.electrum/wallets/default_wallet": true
     }
