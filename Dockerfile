@@ -2,7 +2,7 @@ FROM python:3.6-alpine
 
 ARG BUILD_DATE
 ARG VCS_REF
-ARG VERSION
+ARG VERSION=3.1.1
 LABEL maintainer="oc@co.ru" \
 	org.label-schema.build-date=$BUILD_DATE \
 	org.label-schema.name="Electrum wallet" \
