@@ -69,6 +69,10 @@ curl --data-binary '{"id":"1","method":"listaddresses"}' http://electrum:electru
 
 Always link electrum daemon to containers or bind to localhost directly and not expose 7000 port for security reasons.
 
+### 12 Factor
+
+You may also restore the wallet from a Master Private Key or Master Public Key by setting `ELECTRUM_MASTER_PRIVATE_KEY` or `ELECTRUM_MASTER_PUBLIC_KEY` env vars. This is useful in a setup like Kubernetes. If a wallet already exists, the master private key or the master public key will not be restored.
+
 ## API
 
 * [Electrum protocol specs](http://docs.electrum.org/en/latest/protocol.html)
