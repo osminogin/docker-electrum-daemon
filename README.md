@@ -28,6 +28,7 @@ Running with Docker:
 
 ```bash
 docker run --rm --name electrum-daemon \
+    --env TESTNET=false \
     --publish 127.0.0.1:7000:7000 \
     --volume /srv/electrum:/data \
     osminogin/electrum-daemon
