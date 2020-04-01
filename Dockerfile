@@ -19,8 +19,10 @@ ENV ELECTRUM_USER electrum
 ENV ELECTRUM_PASSWORD electrumz
 ENV ELECTRUM_HOME /home/$ELECTRUM_USER
 
-RUN adduser -D $ELECTRUM_USER && \
-	pip3 install https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz
+RUN apk --update-cache add --virtual build-dependencies gcc musl-dev && \
+	adduser -D $ELECTRUM_USER && \
+	pip3 install https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz && \
+	apk del build-dependencies
 
 RUN mkdir -p ${ELECTRUM_HOME}/.electrum/ /data/ && \
 	ln -sf ${ELECTRUM_HOME}/.electrum/ /data/ && \
