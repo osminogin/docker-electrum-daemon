@@ -1,6 +1,6 @@
 # docker-electrum-daemon
 
-[![](https://img.shields.io/docker/build/osminogin/electrum-daemon.svg)](https://hub.docker.com/r/osminogin/electrum-daemon/builds/) [![](https://images.microbadger.com/badges/version/osminogin/electrum-daemon.svg)](https://microbadger.com/images/osminogin/electrum-daemon) [![](https://images.microbadger.com/badges/commit/osminogin/electrum-daemon.svg)](https://microbadger.com/images/osminogin/electrum-daemon) [![](https://img.shields.io/docker/stars/osminogin/electrum-daemon.svg)](https://hub.docker.com/r/osminogin/electrum-daemon) [![](https://images.microbadger.com/badges/image/osminogin/electrum-daemon.svg)](https://microbadger.com/images/osminogin/electrum-daemon) [![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg)](https://opensource.org/licenses/MIT)
+[![](https://img.shields.io/docker/build/osminogin/electrum-daemon.svg)](https://hub.docker.com/r/osminogin/electrum-daemon/builds/) [![](https://images.microbadger.com/badges/version/osminogin/electrum-daemon.svg)](https://microbadger.com/images/osminogin/electrum-daemon) [![](https://images.microbadger.com/badges/commit/osminogin/electrum-daemon.svg)](https://microbadger.com/images/osminogin/electrum-daemon) [![](https://img.shields.io/docker/stars/osminogin/electrum-daemon.svg)](https://hub.docker.com/r/osminogin/electrum-daemon) [![](https://images.microbadger.com/badges/image/osminogin/electrum-daemon.svg)](https://microbadger.com/images/osminogin/electrum-daemon) [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](https://opensource.org/licenses/MIT)
 
 
 **Electrum client running as a daemon in docker container with JSON-RPC enabled.**
@@ -17,7 +17,7 @@ Star this project on Docker Hub :star2: https://hub.docker.com/r/osminogin/elect
 
 ### Volumes
 
-* `/data` - usually on host it has a path ``/home/user/.electrum``.
+* `/data` - user data folder (on host it usually has a path ``/home/user/.electrum``).
 
 
 ## Getting started
@@ -27,7 +27,7 @@ Star this project on Docker Hub :star2: https://hub.docker.com/r/osminogin/elect
 Running with Docker:
 
 ```bash
-docker run --rm --name electrum-daemon \
+docker run --rm --name electrum \
     --env TESTNET=false \
     --publish 127.0.0.1:7000:7000 \
     --volume /srv/electrum:/data \
@@ -56,7 +56,7 @@ docker exec -it electrum-daemon electrum daemon status
 
 #### docker-compose
 
-Take a look at `docker-compose.yml` to see how this is setup. When running in production, you can use this as a guide.
+[docker-compose.yml](https://github.com/osminogin/docker-electrum-daemon/blob/master/docker-compose.yml) to see minimal working setup. When running in production, you can use this as a guide.
 
 ```bash
 docker-compose up
@@ -77,4 +77,5 @@ Always link electrum daemon to containers or bind to localhost directly and not 
 
 ## License
 
-MIT
+See [LICENSE.md](https://github.com/osminogin/docker-electrum-daemon/blob/master/LICENSE.md)
+

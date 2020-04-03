@@ -1,5 +1,4 @@
 ELECTRUM_VERSION = $(strip $(shell cat VERSION))
-
 GIT_COMMIT = $(strip $(shell git rev-parse --short HEAD))
 
 DOCKER_IMAGE ?= osminogin/electrum-daemon
@@ -22,8 +21,8 @@ docker_build:
 
 docker_push:
 	docker tag $(DOCKER_IMAGE):$(DOCKER_TAG) $(DOCKER_IMAGE):latest
-	docker push $(DOCKER_IMAGE):$(DOCKER_TAG)
 	docker push $(DOCKER_IMAGE):latest
+	docker push $(DOCKER_IMAGE):$(DOCKER_TAG)
 
 output:
 	@echo Docker Image: $(DOCKER_IMAGE):$(DOCKER_TAG)

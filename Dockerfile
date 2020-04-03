@@ -27,7 +27,8 @@ RUN apk --update-cache add --virtual build-dependencies gcc musl-dev && \
 	pip3 install https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz && \
 	apk del build-dependencies
 
-RUN ln -sf ${ELECTRUM_HOME}/.electrum/ /data && \
+RUN mkdir -p ${ELECTRUM_HOME}/.electrum/ /data && \
+	ln -sf ${ELECTRUM_HOME}/.electrum/ /data && \
 	chown ${ELECTRUM_USER} ${ELECTRUM_HOME}/.electrum /data
 
 USER $ELECTRUM_USER
