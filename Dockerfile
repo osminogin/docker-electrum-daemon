@@ -1,4 +1,4 @@
-FROM python:3.6-alpine
+FROM python:3.7-alpine
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -27,16 +27,14 @@ RUN apk --update-cache add --virtual build-dependencies gcc musl-dev && \
 	pip3 install https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz && \
 	apk del build-dependencies
 
-RUN mkdir -p ${ELECTRUM_HOME}/.electrum/ /data/ && \
-	ln -sf ${ELECTRUM_HOME}/.electrum/ /data/ && \
-	chown ${ELECTRUM_USER} ${ELECTRUM_HOME}/.electrum
+RUN ln -sf ${ELECTRUM_HOME}/.electrum/ /data && \
+	chown ${ELECTRUM_USER} ${ELECTRUM_HOME}/.electrum /data
 
 USER $ELECTRUM_USER
 WORKDIR $ELECTRUM_HOME
 VOLUME /data
+EXPOSE 7000
 
 COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
-
-EXPOSE 7000
 CMD ["electrum"]
