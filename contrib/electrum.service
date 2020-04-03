@@ -8,9 +8,9 @@ After=docker.service network.target
 TimeoutStartSec=5
 Restart=always
 RestartSec=20s
-ExecStartPre=/usr/bin/docker pull osminogin/tor-simple
-ExecStart=/usr/bin/docker run --rm --name tor -p 127.0.0.1:9050:9050 osminogin/tor-simple
-ExecStop=/usr/bin/docker stop tor
+ExecStartPre=/usr/bin/docker pull osminogin/electrum-daemon
+ExecStart=/usr/bin/docker run --rm --name electrum -p 127.0.0.1:9000:9000 osminogin/electrum-daemon
+ExecStop=/usr/bin/docker stop electrum
 
 [Install]
 WantedBy=multi-user.target
