@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- Added systemd unit for Electrum wallet service     @osminogin
 - Electrum version updated to 3.3.8     @chris54721
 - Python version bumped to 0.4.2.5  @osminogin
 - Image metadata updated    @osminogin
