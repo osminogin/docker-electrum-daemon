@@ -77,5 +77,5 @@ Always link electrum daemon to containers or bind to localhost directly and not 
 
 ## License
 
-See [LICENSE.md](https://github.com/osminogin/docker-electrum-daemon/blob/master/LICENSE.md)
+See [LICENSE](https://github.com/osminogin/docker-electrum-daemon/blob/master/LICENSE)
 
