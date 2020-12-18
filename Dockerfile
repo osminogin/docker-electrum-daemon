@@ -3,6 +3,7 @@ FROM python:3.7-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 ARG VERSION
+ARG CHECKSUM_SHA512
 LABEL maintainer="osintsev@gmail.com" \
 	org.label-schema.vendor="Distirbuted Solutions, Inc." \
 	org.label-schema.build-date=$BUILD_DATE \
@@ -22,10 +23,17 @@ ENV ELECTRUM_USER electrum
 ENV ELECTRUM_PASSWORD electrumz		# XXX: CHANGE REQUIRED!
 ENV ELECTRUM_HOME /home/$ELECTRUM_USER
 
-RUN apk --update-cache add --virtual build-dependencies gcc musl-dev && \
-	adduser -D $ELECTRUM_USER && \
-	pip3 install https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz && \
-	apk del build-dependencies
+# IMPORTANT: always verify gpg signature before changing a hash here!
+ENV ELECTRUM_CHECKSUM_SHA512 $CHECKSUM_SHA512
+
+RUN adduser -D $ELECTRUM_USER && \
+    apk --no-cache add --virtual build-dependencies gcc musl-dev && \
+    wget https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz && \
+    [ "${ELECTRUM_CHECKSUM_SHA512}  Electrum-${ELECTRUM_VERSION}.tar.gz" = "$(sha512sum Electrum-${ELECTRUM_VERSION}.tar.gz)" ] && \
+    echo -e "**************************\n SHA 512 Checksum OK\n**************************" && \
+    pip3 install Electrum-${ELECTRUM_VERSION}.tar.gz && \
+    rm -f Electrum-${ELECTRUM_VERSION}.tar.gz && \
+    apk del build-dependencies
 
 RUN mkdir -p ${ELECTRUM_HOME}/.electrum/ /data && \
 	ln -sf ${ELECTRUM_HOME}/.electrum/ /data && \
