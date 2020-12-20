@@ -21,6 +21,7 @@ ENV ELECTRUM_VERSION $VERSION
 ENV ELECTRUM_USER electrum
 ENV ELECTRUM_PASSWORD electrumz		# XXX: CHANGE REQUIRED!
 ENV ELECTRUM_HOME /home/$ELECTRUM_USER
+ENV ELECTRUM_NETWORK mainnet
 
 RUN apk --update-cache add --virtual build-dependencies gcc musl-dev && \
 	adduser -D $ELECTRUM_USER && \
