@@ -1,12 +1,10 @@
-FROM python:3.9.1-alpine
+FROM python:3.9.1-alpine as electrumDaemonBase
 
-ARG BUILD_DATE
 ARG VCS_REF
 ARG VERSION
 ARG CHECKSUM_SHA512
 LABEL maintainer="osintsev@gmail.com" \
 	org.label-schema.vendor="Distirbuted Solutions, Inc." \
-	org.label-schema.build-date=$BUILD_DATE \
 	org.label-schema.name="Electrum wallet (RPC enabled)" \
 	org.label-schema.description="Electrum wallet with JSON-RPC enabled (daemon mode)" \
 	org.label-schema.version=$VERSION \
@@ -35,6 +33,10 @@ RUN adduser -D $ELECTRUM_USER && \
     pip3 install Electrum-${ELECTRUM_VERSION}.tar.gz && \
     rm -f Electrum-${ELECTRUM_VERSION}.tar.gz && \
     apk del build-dependencies
+
+FROM electrumDaemonBase as electrumDaemon
+ARG BUILD_DATE
+LABEL org.label-schema.build-date=$BUILD_DATE
 
 RUN mkdir -p ${ELECTRUM_HOME}/.electrum/ /data && \
 	ln -sf ${ELECTRUM_HOME}/.electrum/ /data && \
