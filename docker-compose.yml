@@ -8,4 +8,4 @@ services:
     environment:
       ELECTRUM_USER: electrum
       ELECTRUM_PASSWORD: changeme
-      TESTNET: False
+      ELECTRUM_NETWORK: testnet
