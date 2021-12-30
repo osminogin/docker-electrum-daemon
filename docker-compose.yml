@@ -9,3 +9,7 @@ services:
       ELECTRUM_USER: electrum
       ELECTRUM_PASSWORD: changeme
       TESTNET: False
+    container_name: electrum
+    image: slavikus/electrum-wallet
+    volumes:
+        - ../electrum:/data
