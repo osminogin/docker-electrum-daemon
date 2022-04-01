@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   electrum:
@@ -10,6 +10,6 @@ services:
       ELECTRUM_PASSWORD: changeme
       TESTNET: False
     container_name: electrum
-    image: slavikus/electrum-wallet
+    image:  osminogin/docker-electrum-daemon
     volumes:
         - ../electrum:/data
