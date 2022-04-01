@@ -1,10 +1,15 @@
 #!/usr/bin/env sh
 set -ex
 
-# Testnet support
-if [ "$TESTNET" = true ]; then
+# Network switch
+if [ "$TESTNET" = true ] || [ "$ELECTRUM_NETWORK" = "testnet" ]; then
   FLAGS='--testnet'
+elif [ "$ELECTRUM_NETWORK" = "regtest" ]; then
+  FLAGS='--regtest'
+elif [ "$ELECTRUM_NETWORK" = "simnet" ]; then
+  FLAGS='--simnet'
 fi
+
 
 # Graceful shutdown
 trap 'pkill -TERM -P1; electrum daemon stop; exit 0' SIGTERM
