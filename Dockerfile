@@ -27,7 +27,7 @@ ENV ELECTRUM_NETWORK mainnet
 RUN mkdir -p /data ${ELECTRUM_HOME} && \
 	ln -sf /data ${ELECTRUM_HOME}/.electrum && \
 	chown ${ELECTRUM_USER} ${ELECTRUM_HOME}/.electrum /data
-=======
+
 # IMPORTANT: always verify gpg signature before changing a hash here!
 ENV ELECTRUM_CHECKSUM_SHA512 $CHECKSUM_SHA512
 
@@ -46,7 +46,7 @@ RUN mkdir -p /data \
 	    ${ELECTRUM_HOME}/.electrum/regtest/wallets/ \
 	    ${ELECTRUM_HOME}/.electrum/simnet/wallets/ && \
     ln -sf ${ELECTRUM_HOME}/.electrum/ /data && \
-	  chown -R ${ELECTRUM_USER} ${ELECTRUM_HOME}/.electrum /data
+	chown -R ${ELECTRUM_USER} ${ELECTRUM_HOME}/.electrum /data
 
 USER $ELECTRUM_USER
 WORKDIR $ELECTRUM_HOME
