@@ -25,6 +25,13 @@ ENV ELECTRUM_PASSWORD electrumz		# XXX: CHANGE REQUIRED!
 ENV ELECTRUM_HOME /home/$ELECTRUM_USER
 ENV ELECTRUM_NETWORK testnet
 
+<<<<<<< HEAD
+=======
+RUN mkdir -p /data ${ELECTRUM_HOME} && \
+	ln -sf /data ${ELECTRUM_HOME}/.electrum && \
+	chown ${ELECTRUM_USER} ${ELECTRUM_HOME}/.electrum /data
+
+>>>>>>> a848140da0152b2e635a16d3676885379742fa49
 # IMPORTANT: always verify gpg signature before changing a hash here!
 # ENV ELECTRUM_CHECKSUM_SHA512 
 
@@ -45,11 +52,19 @@ RUN adduser -D $ELECTRUM_USER && \
 	apk del build-dependencies
 
 RUN mkdir -p /data \
+<<<<<<< HEAD
 	${ELECTRUM_HOME}/.electrum/wallets/ \
 	${ELECTRUM_HOME}/.electrum/testnet/wallets/ \
 	${ELECTRUM_HOME}/.electrum/regtest/wallets/ \
 	${ELECTRUM_HOME}/.electrum/simnet/wallets/ && \
 	ln -sf ${ELECTRUM_HOME}/.electrum/ /data && \
+=======
+	    ${ELECTRUM_HOME}/.electrum/wallets/ \
+	    ${ELECTRUM_HOME}/.electrum/testnet/wallets/ \
+	    ${ELECTRUM_HOME}/.electrum/regtest/wallets/ \
+	    ${ELECTRUM_HOME}/.electrum/simnet/wallets/ && \
+    ln -sf ${ELECTRUM_HOME}/.electrum/ /data && \
+>>>>>>> a848140da0152b2e635a16d3676885379742fa49
 	chown -R ${ELECTRUM_USER} ${ELECTRUM_HOME}/.electrum /data
 
 USER $ELECTRUM_USER
