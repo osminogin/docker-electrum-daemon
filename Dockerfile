@@ -21,12 +21,9 @@ LABEL maintainer="osintsev@gmail.com" \
 ENV ELECTRUM_VERSION $VERSION
 ENV ELECTRUM_USER electrum
 ENV ELECTRUM_PASSWORD electrumz		# XXX: CHANGE REQUIRED!
+ENV ELECTRUM_VERSION 4.2.0
 ENV ELECTRUM_HOME /home/$ELECTRUM_USER
 ENV ELECTRUM_NETWORK testnet
-
-RUN mkdir -p /data ${ELECTRUM_HOME} && \
-	ln -sf /data ${ELECTRUM_HOME}/.electrum && \
-	chown ${ELECTRUM_USER} ${ELECTRUM_HOME}/.electrum /data
 
 # IMPORTANT: always verify gpg signature before changing a hash here!
 # ENV ELECTRUM_CHECKSUM_SHA512 
