@@ -2,7 +2,9 @@
 set -ex
 
 # Network switch
-if [ "$TESTNET" = true ] || [ "$ELECTRUM_NETWORK" = "testnet" ]; then
+if [ "$ELECTRUM_NETWORK" = "mainnet" ]; then
+  FLAGS='--mainnet'
+elif [ "$ELECTRUM_NETWORK" = "testnet" ]; then
   FLAGS='--testnet'
 elif [ "$ELECTRUM_NETWORK" = "regtest" ]; then
   FLAGS='--regtest'
