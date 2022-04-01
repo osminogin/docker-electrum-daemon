@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   electrum:
@@ -9,3 +9,7 @@ services:
       ELECTRUM_USER: electrum
       ELECTRUM_PASSWORD: changeme
       TESTNET: False
+    container_name: electrum
+    image:  osminogin/docker-electrum-daemon
+    volumes:
+        - ../electrum:/data
