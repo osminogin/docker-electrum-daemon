@@ -32,11 +32,11 @@ RUN mkdir -p /data ${ELECTRUM_HOME} && \
 ENV ELECTRUM_CHECKSUM_SHA512 $CHECKSUM_SHA512
 
 RUN adduser -D $ELECTRUM_USER && \
-    apk --no-cache add --virtual build-dependencies gcc musl-dev libsecp256k1 && \
+    apk --no-cache add --virtual build-dependencies gcc musl-dev libsecp256k1 libsecp256k1-dev libressl-dev  && \
     wget https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz && \
     [ "${ELECTRUM_CHECKSUM_SHA512}  Electrum-${ELECTRUM_VERSION}.tar.gz" = "$(sha512sum Electrum-${ELECTRUM_VERSION}.tar.gz)" ] && \
     echo -e "**************************\n SHA 512 Checksum OK\n**************************" && \
-    pip3 install pycryptodomex Electrum-${ELECTRUM_VERSION}.tar.gz && \
+    pip3 install cryptography==2.1.4 pycryptodomex Electrum-${ELECTRUM_VERSION}.tar.gz && \
     rm -f Electrum-${ELECTRUM_VERSION}.tar.gz && \
     apk del build-dependencies
 

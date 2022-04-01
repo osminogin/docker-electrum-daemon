@@ -13,6 +13,9 @@ release: docker_tag docker_push output
 
 default: docker_build output
 
+download:
+	@
+
 docker_build:
 	@docker build \
 		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \

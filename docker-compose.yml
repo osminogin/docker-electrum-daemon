@@ -6,9 +6,10 @@ services:
     ports:
       - 127.0.0.1:7000:7000
     environment:
-      ELECTRUM_USER: electrum
-      ELECTRUM_PASSWORD: changeme
-      TESTNET: False
+      - ELECTRUM_USER=electrum
+      - ELECTRUM_PASSWORD=changeme
+      - ELECTRUM_NETWORK=testnet
+      - ELECTRUM_VERSION=4.2.1
     container_name: electrum
     image:  osminogin/docker-electrum-daemon
     volumes:
