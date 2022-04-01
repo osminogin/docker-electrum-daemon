@@ -1,4 +1,4 @@
-version: "3"
+version: '3.7'
 
 services:
   electrum:
@@ -12,3 +12,11 @@ services:
       - ELECTRUM_HOME=/home/electrum
     ports:
       - 127.0.0.1:7000:7000
+    environment:
+      ELECTRUM_USER: electrum
+      ELECTRUM_PASSWORD: changeme
+      ELECTRUM_NETWORK: testnet
+    container_name: electrum
+    image:  osminogin/docker-electrum-daemon
+    volumes:
+        - ../electrum:/data
