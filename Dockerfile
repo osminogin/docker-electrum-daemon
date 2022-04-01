@@ -2,7 +2,7 @@ FROM python:3.9.12-alpine
 
 ARG BUILD_DATE
 ARG VCS_REF
-ARG VERSION
+# ARG VERSION
 ARG CHECKSUM_SHA512
 LABEL maintainer="osintsev@gmail.com" \
 	org.label-schema.vendor="Boroda Group" \
@@ -18,10 +18,9 @@ LABEL maintainer="osintsev@gmail.com" \
 	org.label-schema.docker.cmd='docker run -d --name electrum-daemon --publish 127.0.0.1:7000:7000 --volume /srv/electrum:/data osminogin/electrum-daemon' \
 	org.label-schema.schema-version="1.0"
 
-ENV ELECTRUM_VERSION $VERSION
+ENV ELECTRUM_VERSION 4.2.1
 ENV ELECTRUM_USER electrum
 ENV ELECTRUM_PASSWORD electrumz		# XXX: CHANGE REQUIRED!
-ENV ELECTRUM_VERSION 4.2.0
 ENV ELECTRUM_HOME /home/$ELECTRUM_USER
 ENV ELECTRUM_NETWORK testnet
 
@@ -35,9 +34,10 @@ RUN adduser -D $ELECTRUM_USER && \
 	musl-dev \
 	libsecp256k1-dev \ 
 	libffi-dev && \
-	apk --no-cache add --virtual build-dependencies gcc musl-dev libsecp256k1-dev libressl-dev libffi-dev && \
+	apk --no-cache add --virtual build-dependencies gcc musl-dev libsecp256k1 libsecp256k1-dev libressl-dev libffi-dev && \
 	wget https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz && \
-	pip3 install --no-cache-dir cryptography==2.1.4 && Electrum-${ELECTRUM_VERSION}.tar.gz && \
+	tar xvzf Electrum-${ELECTRUM_VERSION}.tar.gz && \
+	pip3 install --user .[gui,crypto] && \
 	rm -f Electrum-${ELECTRUM_VERSION}.tar.gz && \
 	apk del build-dependencies
 
