@@ -1,4 +1,4 @@
-FROM python:3.9.12-alpine
+FROM python:3.10-alpine
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -20,7 +20,7 @@ LABEL maintainer="osintsev@gmail.com" \
 
 ENV ELECTRUM_VERSION 4.2.1
 ENV ELECTRUM_USER electrum
-ENV ELECTRUM_PASSWORD electrumz		# XXX: CHANGE REQUIRED!
+ENV ELECTRUM_PASSWORD electrumz
 ENV ELECTRUM_HOME /home/$ELECTRUM_USER
 ENV ELECTRUM_NETWORK testnet
 
@@ -28,16 +28,25 @@ ENV ELECTRUM_NETWORK testnet
 # ENV ELECTRUM_CHECKSUM_SHA512 
 
 RUN echo "${ELECTRUM_VERSION} ${ELECTRUM_HOME}"
-RUN adduser -D $ELECTRUM_USER && \
-	apk add --no-cache \
+RUN adduser -D $ELECTRUM_USER
+RUN	apk update && \
+	apk add bash \
 	libressl-dev \
 	musl-dev \
 	libsecp256k1-dev \ 
+	libffi-dev 
+RUN	apk add --virtual \
+	build-dependencies \
+	gcc \
+	musl-dev \
+	libsecp256k1 \
+	libsecp256k1-dev \
+	libressl-dev \
 	libffi-dev && \
-	apk --no-cache add --virtual build-dependencies gcc musl-dev libsecp256k1 libsecp256k1-dev libressl-dev libffi-dev && \
 	wget https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz && \
-	tar xvzf Electrum-${ELECTRUM_VERSION}.tar.gz && \
-	pip3 install --user .[gui,crypto] && \
+	tar xvzf Electrum-${ELECTRUM_VERSION}.tar.gz
+
+RUN	pip3 install cryptography Electrum-${ELECTRUM_VERSION}.tar.gz && \
 	rm -f Electrum-${ELECTRUM_VERSION}.tar.gz && \
 	apk del build-dependencies
 
@@ -54,6 +63,5 @@ WORKDIR $ELECTRUM_HOME
 VOLUME /data
 EXPOSE 7000
 
-COPY docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["electrum"]
+COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
