@@ -17,7 +17,7 @@ download:
 	@
 
 docker_build:
-	@docker build \
+	@docker build --network host \
 		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
 		--build-arg VERSION=$(ELECTRUM_VERSION) \
 		--build-arg CHECKSUM_SHA512=$(ELECTRUM_CHECKSUM_SHA512) \

@@ -1,8 +1,8 @@
-FROM python:3.9.12-alpine
+FROM python:3.10-alpine
 
 ARG BUILD_DATE
 ARG VCS_REF
-ARG VERSION
+# ARG VERSION
 ARG CHECKSUM_SHA512
 LABEL maintainer="osintsev@gmail.com" \
 	org.label-schema.vendor="Boroda Group" \
@@ -18,27 +18,37 @@ LABEL maintainer="osintsev@gmail.com" \
 	org.label-schema.docker.cmd='docker run -d --name electrum-daemon --publish 127.0.0.1:7000:7000 --volume /srv/electrum:/data osminogin/electrum-daemon' \
 	org.label-schema.schema-version="1.0"
 
-ENV ELECTRUM_VERSION $VERSION
+ENV ELECTRUM_VERSION 4.2.1
 ENV ELECTRUM_USER electrum
-ENV ELECTRUM_PASSWORD electrumz		# XXX: CHANGE REQUIRED!
+ENV ELECTRUM_PASSWORD electrumz
 ENV ELECTRUM_HOME /home/$ELECTRUM_USER
-ENV ELECTRUM_NETWORK mainnet
-
-RUN mkdir -p /data ${ELECTRUM_HOME} && \
-	ln -sf /data ${ELECTRUM_HOME}/.electrum && \
-	chown ${ELECTRUM_USER} ${ELECTRUM_HOME}/.electrum /data
+ENV ELECTRUM_NETWORK testnet
 
 # IMPORTANT: always verify gpg signature before changing a hash here!
-ENV ELECTRUM_CHECKSUM_SHA512 $CHECKSUM_SHA512
+# ENV ELECTRUM_CHECKSUM_SHA512 
 
-RUN adduser -D $ELECTRUM_USER && \
-    apk --no-cache add --virtual build-dependencies gcc musl-dev libsecp256k1 libsecp256k1-dev libressl-dev  && \
-    wget https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz && \
-    [ "${ELECTRUM_CHECKSUM_SHA512}  Electrum-${ELECTRUM_VERSION}.tar.gz" = "$(sha512sum Electrum-${ELECTRUM_VERSION}.tar.gz)" ] && \
-    echo -e "**************************\n SHA 512 Checksum OK\n**************************" && \
-    pip3 install cryptography==2.1.4 pycryptodomex Electrum-${ELECTRUM_VERSION}.tar.gz && \
-    rm -f Electrum-${ELECTRUM_VERSION}.tar.gz && \
-    apk del build-dependencies
+RUN echo "${ELECTRUM_VERSION} ${ELECTRUM_HOME}"
+RUN adduser -D $ELECTRUM_USER
+RUN	apk update && \
+	apk add bash \
+	libressl-dev \
+	musl-dev \
+	libsecp256k1-dev \ 
+	libffi-dev 
+RUN	apk add --virtual \
+	build-dependencies \
+	gcc \
+	musl-dev \
+	libsecp256k1 \
+	libsecp256k1-dev \
+	libressl-dev \
+	libffi-dev && \
+	wget https://download.electrum.org/${ELECTRUM_VERSION}/Electrum-${ELECTRUM_VERSION}.tar.gz && \
+	tar xvzf Electrum-${ELECTRUM_VERSION}.tar.gz
+
+RUN	pip3 install cryptography Electrum-${ELECTRUM_VERSION}.tar.gz && \
+	rm -f Electrum-${ELECTRUM_VERSION}.tar.gz && \
+	apk del build-dependencies
 
 RUN mkdir -p /data \
 	    ${ELECTRUM_HOME}/.electrum/wallets/ \
@@ -53,6 +63,5 @@ WORKDIR $ELECTRUM_HOME
 VOLUME /data
 EXPOSE 7000
 
-COPY docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["electrum"]
+COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
